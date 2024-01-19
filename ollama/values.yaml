@@ -1,0 +1,23 @@
+fullnameOverride: ""
+nameOverride: ""
+replicaCount: 1
+
+image:
+  repository: ollama/ollama
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 11434
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 50Gi
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

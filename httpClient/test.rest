@@ -1,0 +1,31 @@
+GET {{host}}/api/tags
+Accept: application/json
+
+###
+
+#@name: Pull llama2
+POST {{host}}/api/pull
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "llama2"
+}
+
+###
+
+#@name: Generate
+POST {{host}}/api/generate
+Content-Type: application/json
+
+{
+  "model": "orca-mini",
+  "prompt": "Why is the sky blue?",
+  "stream": false
+}
+
+###
+
+
+
+
