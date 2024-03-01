@@ -18,17 +18,30 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.commandOverride }}
+          command: 
+            - {{ .Values.commandOverride.command }}
+          args: 
+            {{- range .Values.commandOverride.args }}
+            - "{{ . }}"
+            {{- end }}
+          {{- end }}
           ports:
             - containerPort: 11434
-          {{- if .Values.persistence.enabled }}
           volumeMounts:
+            - name: temp
+              mountPath: /tmp
+          {{- if .Values.persistence.enabled }}
             - name: ollama-storage
               mountPath: /root/.ollama
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- if .Values.persistence.enabled }}
       volumes:
+        - name: temp
+          emptyDir:
+            sizeLimit: 1G
+      {{- if .Values.persistence.enabled }}
         - name: ollama-storage
           persistentVolumeClaim:
             claimName: {{ include "ollama.fullname" . }}

@@ -16,8 +16,13 @@ persistence:
   storageClass: ""
   accessMode: ReadWriteOnce
   size: 50Gi
+  retain: true
 
 resources: {}
 nodeSelector: {}
 tolerations: []
 affinity: {}
+commandOverride:
+  enabled: false
+  command: /bin/true
+  args: []
